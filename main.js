@@ -5,7 +5,7 @@ const posts = [
         "media": "https://unsplash.it/300/300?image=171",
         "author": {
             "name": "Phil Mangione",
-            "image": "https://picsum.photos/300/300"
+            "image": "https://unsplash.it/300/300?image=15"
         },
         "likes": 80,
         "created": "2023-02-29"
@@ -58,9 +58,6 @@ const posts = [
 
 const containerPosts = document.querySelector("#container")
 
-
-
-
 // i cretate Dynamicly the posts with array "posts"
 posts.forEach((object) => {
     const post = `<div class="post">
@@ -82,7 +79,7 @@ posts.forEach((object) => {
             <div class="post__footer">
                 <div class="likes js-likes">
                     <div class="likes__cta">
-                        <a class="like-button  js-like-button" href="#" data-postid="1">
+                        <a class="like-button  js-like-button" href="#" data-postid="${object.id}">
                             <i class="like-button__icon fas fa-thumbs-up" aria-hidden="true"></i>
                             <span class="like-button__label">Mi Piace</span>
                         </a>
@@ -98,7 +95,32 @@ posts.forEach((object) => {
 })
 
 
+//addeventListener on like button 
+const ArrayButtonsEl = document.querySelectorAll(".like-button")
+const arrayIdClick = []
+const numberLike = document.querySelectorAll(".likes__counter > b")
 
+
+ArrayButtonsEl.forEach((elementDom, index) => {
+    elementDom.addEventListener("click", function (e) {
+        e.preventDefault()
+        elementDom.classList.toggle("like-button--liked")
+
+        const postId = elementDom.getAttribute("data-postid");
+        
+        if (elementDom.classList.contains("like-button--liked")) {
+            arrayIdClick.push(postId);
+
+
+        } else {
+            const filteredArray = arrayIdClick.filter(id => id !== postId);
+            arrayIdClick.length = 0;
+            arrayIdClick.push(...filteredArray); 
+        }
+        
+        console.log(arrayIdClick);
+    })
+})
 
 // -------FUNCTION 
 
@@ -116,7 +138,7 @@ function differenceDate(date) {
         return diffInHours + " hours ago"
     } else if (diffInDays < 30) {
         return diffInDays + " days ago"
-    } else if (diffInMonths < 12){
+    } else if (diffInMonths < 12) {
         return diffInMonths + " months ago"
     } else {
         return date

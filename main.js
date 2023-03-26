@@ -59,8 +59,6 @@ const posts = [
 const containerPosts = document.querySelector("#container")
 
 // i cretate Dynamicly the posts with array "posts"
-
-
 posts.forEach((object) => {
 
     const charProfileName = checkProfilePhoto(object.media, object.author.name)
@@ -134,12 +132,11 @@ ArrayButtonsEl.forEach((elementDom, index) => {
 
         const postId = elementDom.getAttribute("data-postid");
         let nLike = Number(elementDom.closest(".likes__cta").nextElementSibling.querySelector(".js-likes-counter").innerText)
-
+        //add the condition to check if the Like button has already been clicked
         if (elementDom.classList.contains("like-button--liked")) {
             arrayIdClick.push(postId);
             console.log("array id = " + arrayIdClick);
             nLike++
-
         } else {
             const filteredArray = arrayIdClick.filter(id => id !== postId);
             arrayIdClick = [];
@@ -147,19 +144,14 @@ ArrayButtonsEl.forEach((elementDom, index) => {
             console.log("array id = " + arrayIdClick);
             nLike--
         }
-
         numberLike[index].innerText = nLike;
     })
 })
 
-
-
-
 // -------FUNCTION 
 
-
 /**
- * add class "display" none to the img with profile photo if user doesn't put profile photo
+ * add class "display-none" to the img with profile photo if the user doesn't put profile photo
  * @param {string} profilePhoto info about profile picture
  * @returns class to add display-none to the photo
  */
@@ -170,7 +162,7 @@ function addDnoneClasses(profilePhoto) {
 }
 
 /**
- * add class "display none" to the div with characters if user put profile photo
+ * add class "display-none" to the div with characters if the user put profile photo
 * @param {string} profilePhoto info about profile pictures
 * @returns class to add the first few characters instead of profile picture
 */
